@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Conteúdo</title>
+<title>Verificação</title>
 
 <style>
 html,body{
@@ -16,7 +16,6 @@ html,body{
   font-family:Arial, sans-serif;
 }
 
-/* Vídeo já carregado por baixo */
 video{
   position:fixed;
   inset:0;
@@ -25,36 +24,52 @@ video{
   object-fit:cover;
 }
 
-/* Tela fake por cima */
-#fake{
+#overlay{
   position:fixed;
   inset:0;
-  background:#0f0f0f;
-  color:#eaeaea;
+  background:#f2f2f2;
   display:flex;
   align-items:center;
   justify-content:center;
   z-index:10;
 }
 
-.box{
-  background:#1c1c1c;
-  padding:25px;
-  border-radius:8px;
-  max-width:300px;
-  text-align:center;
-  box-shadow:0 0 30px black;
+.captcha{
+  background:white;
+  border:1px solid #dcdcdc;
+  padding:15px;
+  width:280px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  box-shadow:0 2px 6px rgba(0,0,0,.2);
 }
 
-button{
-  margin-top:15px;
-  padding:10px;
-  width:100%;
-  border:none;
-  border-radius:5px;
-  background:#2ea44f;
-  color:white;
-  font-size:15px;
+.checkbox{
+  width:22px;
+  height:22px;
+  border:2px solid #c1c1c1;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.check{
+  display:none;
+  font-size:16px;
+}
+
+.text{
+  font-size:14px;
+  color:#000;
+}
+
+.loading{
+  display:none;
+  font-size:13px;
+  color:#555;
+  margin-left:32px;
 }
 </style>
 </head>
@@ -65,23 +80,34 @@ button{
   <source src="SEU_VIDEO.mp4" type="video/mp4">
 </video>
 
-<div id="fake">
-  <div class="box">
-    <p>Este conteúdo pode conter mídia sensível.</p>
-    <p>Confirme para continuar.</p>
-    <button id="btn">Aceitar</button>
+<div id="overlay">
+  <div>
+    <div class="captcha">
+      <div class="checkbox" id="box">
+        <span class="check">✔</span>
+      </div>
+      <div class="text">Não sou um robô</div>
+    </div>
+    <div class="loading" id="loading">Verificando…</div>
   </div>
 </div>
 
 <script>
-const btn = document.getElementById("btn");
-const fake = document.getElementById("fake");
+const box = document.getElementById("box");
+const check = document.querySelector(".check");
+const overlay = document.getElementById("overlay");
+const loading = document.getElementById("loading");
 const video = document.getElementById("v");
 
-btn.onclick = () => {
-  fake.style.display = "none";
-  video.play();
-  video.requestFullscreen();
+box.onclick = () => {
+  check.style.display = "block";
+  loading.style.display = "block";
+
+  setTimeout(() => {
+    overlay.style.display = "none";
+    video.play();
+    video.requestFullscreen();
+  }, 700);
 };
 </script>
 
