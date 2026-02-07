@@ -16,6 +16,11 @@ html,body{
   overflow:hidden;
 }
 
+/* BLOQUEIO DE CLIQUES */
+.block{
+  pointer-events:none;
+}
+
 /* Vídeo */
 video{
   position:fixed;
@@ -111,7 +116,7 @@ video{
   </div>
 
   <div class="right">
-    <img src="FOTO.png" alt="verificação">
+    <img src="FOTO" alt="verificação">
   </div>
 </div>
 
@@ -129,8 +134,11 @@ box.onclick = () => {
     spinner.style.display = "none";
     check.style.display = "block";
 
-    // some com a caixa para sempre
+    // remove a caixa
     captchaBox.style.display = "none";
+
+    // BLOQUEIA CLIQUES
+    document.body.classList.add("block");
 
     // toca o vídeo
     video.style.display = "block";
@@ -139,9 +147,13 @@ box.onclick = () => {
   }, 900);
 };
 
-// quando o vídeo terminar, deixa a tela limpa
+// quando o vídeo terminar
 video.addEventListener("ended", () => {
   video.style.display = "none";
+
+  // libera cliques novamente
+  document.body.classList.remove("block");
+
   document.body.style.background = "black";
 });
 </script>
