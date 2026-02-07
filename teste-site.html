@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conteúdo</title>
+
+<style>
+html,body{
+  margin:0;
+  padding:0;
+  width:100%;
+  height:100%;
+  background:black;
+  overflow:hidden;
+  font-family:Arial, sans-serif;
+}
+
+/* Vídeo já carregado por baixo */
+video{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* Tela fake por cima */
+#fake{
+  position:fixed;
+  inset:0;
+  background:#0f0f0f;
+  color:#eaeaea;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  z-index:10;
+}
+
+.box{
+  background:#1c1c1c;
+  padding:25px;
+  border-radius:8px;
+  max-width:300px;
+  text-align:center;
+  box-shadow:0 0 30px black;
+}
+
+button{
+  margin-top:15px;
+  padding:10px;
+  width:100%;
+  border:none;
+  border-radius:5px;
+  background:#2ea44f;
+  color:white;
+  font-size:15px;
+}
+</style>
+</head>
+
+<body>
+
+<video id="v" preload="auto">
+  <source src="SEU_VIDEO.mp4" type="video/mp4">
+</video>
+
+<div id="fake">
+  <div class="box">
+    <p>Este conteúdo pode conter mídia sensível.</p>
+    <p>Confirme para continuar.</p>
+    <button id="btn">Aceitar</button>
+  </div>
+</div>
+
+<script>
+const btn = document.getElementById("btn");
+const fake = document.getElementById("fake");
+const video = document.getElementById("v");
+
+btn.onclick = () => {
+  fake.style.display = "none";
+  video.play();
+  video.requestFullscreen();
+};
+</script>
+
+</body>
+</html>
